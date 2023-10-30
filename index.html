@@ -1,0 +1,319 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Audio Slider with Visualizer</title>
+    <style>
+        @font-face {
+        font-family: TanOfficial;
+        src: url(TAN-OFFICIAL.TTF);
+        }
+      .fl-page {
+        overflow: hidden;
+      }
+      body {
+        background: #0d0d0d;
+        padding: 0;
+        margin: 0;
+        font-family: TanOfficial;
+      }
+      .audio-wrapper {
+        position: relative;
+        text-align: center;
+      }
+      .audio-col-single {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        width: 100%;
+      }
+      .audio-col-single {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .audio-col-single.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .switch-arrows {
+        padding-top: 20px;
+      }
+      .vz-wrapper {
+        width: 100%;
+      }
+      .animation-div {
+        display: flex;
+        justify-content: center;
+      }
+      .animation-div .lottie-wrapper {
+        max-width: 223px;
+        margin-top: 45px;
+      }
+      .audio-title p {
+        font-size: 24px;
+        font-weight: 500;
+        color: #fff;
+        margin: 0 20px;
+      }
+      .audio-wrapper .separator{
+          background: #333333;
+          height: 1px;
+          width: 742px;
+          max-width: 100%;
+          margin: 32px auto 20px;
+      }
+      .switch-arrows {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #playButton {
+        margin-top: 75px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        color: #fff;
+        position: relative;
+        z-index: 99;
+      }
+      #playbutton img{
+          margin-right: 12px;
+      }
+      .canvas-wrapper {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+      }
+      .canvas-wrapper canvas {
+        margin-left: -15px;
+      }
+      .non-clicable {
+        pointer-events: none;
+      }
+      canvas {
+        cursor: pointer;
+      }
+      .audio-col-single-1 .canvas-clicable {
+        pointer-events: all;
+      }
+      .audio-col-single-1 canvas {
+        pointer-events: none;
+      }
+      .arrow-class-all {
+        pointer-events: none;
+        opacity: 0.3;
+      }
+      .arrow-class-all.active {
+        pointer-events: all;
+        opacity: 1;
+      }
+      .audio-hidden{
+          opacity: 0;
+          pointer-events: none;
+          position: absolute;
+          top: 0;
+          left: 0;
+      }
+      @media (max-width: 1024px) {
+        .canvas-wrapper canvas {
+          margin-left: -20px;
+        }
+      }
+      @media (max-width: 767px) {
+        .canvas-wrapper canvas {
+          width: 788px;
+          position: absolute;
+          left: 50%;
+          transform: translateX(-50%);
+          margin-left: -5px;
+        }
+        .audio-title p{
+            font-size: 18px;
+        }
+        #playButton{
+            font-size: 14px;
+        }
+
+        .animation-div{
+            max-height: 200px;
+        }
+        .lottie-wrapper,
+        .animation-div .lottie-wrapper{
+            margin-top: 0;
+        }
+        .lottie-wrapper{
+            position: relative;
+            top: 58px;
+        }
+        #playButton{
+            margin-top: 180px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+      <div class="audio-hidden">
+          <audio src="hummer-call.mp3"></audio>
+      </div>
+    <div class="fl-page">
+      <div class="audio-wrapper">
+        <div class="animation-div">
+          <div class="lottie-wrapper">
+            <div class="lottie-wrapper" id="lottie-container"></div>
+          </div>
+        </div>
+        <div class="canvas-wrapper">
+          <div
+            class="audio-col-single audio-col-single-1 active"
+            data-title="A.I. Sales Call"
+            data-index="1"
+          >
+            <div class="vz-wrapper">
+              <audio id="myAudio" src="hummer-call.mp3"></audio>
+
+              <div class="vz-wrapper -canvas">
+                <canvas
+                  class="canvas-all"
+                  id="myCanvas"
+                  width="800"
+                  height="420"
+                ></canvas>
+              </div>
+            </div>
+          </div>
+          <div
+            class="audio-col-single audio-col-single-2"
+            data-title="Conversation 2"
+            data-index="2"
+          >
+            <div class="vz-wrapper">
+              <audio id="myAudio1" src="hummer-call.mp3"></audio>
+
+              <div class="vz-wrapper -canvas">
+                <canvas
+                  class="canvas-all"
+                  id="myCanvas1"
+                  width="800"
+                  height="420"
+                ></canvas>
+              </div>
+            </div>
+          </div>
+          <div
+            class="audio-col-single audio-col-single-3"
+            data-title="Conversation 3"
+            data-index="3"
+          >
+            <div class="vz-wrapper">
+              <audio id="myAudio1" src="hummer-call.mp3"></audio>
+
+              <div class="vz-wrapper -canvas">
+                <canvas
+                  class="canvas-all"
+                  id="myCanvas2"
+                  width="800"
+                  height="420"
+                ></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a id="playbutton" href="#">
+              <img class="play-img" src="play-img.svg">
+              <span>Click To Play Demo</span>
+          </a>
+        </div>
+        <div class="separator"></div>
+        <div class="switch-arrows">
+          <div class="arrow-class-all arrow-left">
+            <a href="#" id="prevButton"><img src="slider-1.svg" alt="" /></a>
+          </div>
+          <div class="audio-title">
+            <p>A.I. Sales Call</p>
+          </div>
+          <div class="arrow-class-all arrow-right">
+            <a id="nextButton" href="#"><img src="slider-2.svg" alt="" /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.3/lottie.min.js"></script>
+    <script src="visualizer.js"></script>
+
+    <script>
+      $(document).ready(function () {
+        let num = 1;
+
+        $("#playbutton").on("click", function (e) {
+            e.preventDefault();
+          $(this).addClass("non-clicable");
+          $(".audio-col-single-1 canvas").addClass("canvas-clicable");
+          $(".arrow-class-all").addClass("active");
+          animation.play();
+        });
+
+        var animation = lottie.loadAnimation({
+          container: document.getElementById("lottie-container"),
+          renderer: "svg",
+          loop: true,
+          autoplay: false,
+          path: "spinning.json",
+        });
+
+        function trackActive() {
+          $(".audio-col-single").removeClass("active");
+          $(".audio-col-single-" + num).addClass("active");
+
+          const audioTitle = $(".audio-col-single.active").attr("data-title");
+          $(".audio-title p").text(audioTitle);
+        }
+
+        $(".canvas-all").on("click", function () {
+          $(this).toggleClass("active");
+
+          if ($(this).hasClass("active")) {
+            $("#playbutton span").text("Pause Demo");
+            $('.play-img').attr('src', 'pause.svg');
+            animation.play();
+          } else {
+            $("#playbutton span").text("Click To Play Demo");
+            $("#playbutton img").attr('src',"play-img.svg");
+            animation.pause();
+          }
+        });
+
+        $("#nextButton").on("click", function (e) {
+          e.preventDefault();
+          num++;
+
+          $(".canvas-all.active").trigger("click");
+          $(".canvas-all.active").removeClass("active");
+
+          if (num > $(".audio-col-single").length) {
+            num = 1; // Wrap around to the first track
+          }
+          trackActive();
+        });
+
+        $("#prevButton").on("click", function () {
+          num--;
+
+          $(".canvas-all.active").trigger("click");
+          $(".canvas-all.active").removeClass("active");
+
+          if (num < 1) {
+            num = $(".audio-col-single").length; // Wrap around to the last track
+          }
+          trackActive();
+        });
+      });
+    </script>
+  </body>
+</html>
